@@ -38,6 +38,12 @@ async function run() {
       res.send(result);
     });
 
+    // read all visa
+    app.get('/visas', async(req, res) => {
+      const cursor = visaCollections.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
 
 
