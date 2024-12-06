@@ -25,7 +25,18 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
+
+    // create database
+    const visaCollections = client.db('visaCareDB').collection('visas');
+
+    // create visa
+    app.post('/visas', async(req, res) => {
+      const newVisa = req.body;
+      console.log(newVisa);
+      const result = await visaCollections.insertOne(newVisa);
+      res.send(result);
+    });
 
 
 
