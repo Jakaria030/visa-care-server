@@ -42,13 +42,19 @@ async function run() {
     // read all or specific visa
     app.get('/visas', async(req, res) => {
       const email = req.query.email;
-      if(email === undefined){
-        const cursor = visaCollections.find();
+      const latest = req.query.latest;
+      if(latest){
+        const cursor = visaCollections.find().sort({ _id: -1 }).limit(6);
+        const result = await cursor.toArray();
+        console.log("object");
+        res.send(result);
+      }else if(email){
+        const query = {authEmail: email};
+        const cursor = visaCollections.find(query);
         const result = await cursor.toArray();
         res.send(result);
       }else{
-        const query = {authEmail: email};
-        const cursor = visaCollections.find(query);
+        const cursor = visaCollections.find();
         const result = await cursor.toArray();
         res.send(result);
       }
