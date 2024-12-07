@@ -65,7 +65,22 @@ async function run() {
       res.send(result);
     });
 
+    // read specific applicatioon
+    app.get('/applications/:email', async(req, res) => {
+      const email = req.params.email;
+      const query = {email: email};
+      const cursor = applicationCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
+    // delete signle application
+    app.delete('/applications/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await applicationCollection.deleteOne(query);
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
