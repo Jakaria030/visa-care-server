@@ -29,11 +29,12 @@ async function run() {
 
     // create database
     const visaCollections = client.db('visaCareDB').collection('visas');
+    const applicationCollection = client.db('visaCareDB').collection('applications');
 
     // create visa
     app.post('/visas', async(req, res) => {
       const newVisa = req.body;
-      console.log(newVisa);
+      // console.log(newVisa);
       const result = await visaCollections.insertOne(newVisa);
       res.send(result);
     });
@@ -50,6 +51,17 @@ async function run() {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)};
       const result = await visaCollections.findOne(query);
+      res.send(result);
+    });
+
+
+
+    // user application visa api's here
+
+    // create application
+    app.post('/applications', async(req, res) => {
+      const application = req.body;
+      const result = await applicationCollection.insertOne(application);
       res.send(result);
     });
 
