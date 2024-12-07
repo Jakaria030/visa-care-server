@@ -70,6 +70,35 @@ async function run() {
       res.send(result);
     });
 
+    // update signle visa
+    app.put('/visas/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const options = {upsert: true};
+      const updatedVisa = req.body;
+
+      const visa = {
+        $set: {
+          countryImage:updatedVisa.countryImage,
+          countryFlag:updatedVisa.countryFlag,
+          countryName:updatedVisa.countryName,
+          visaType:updatedVisa.visaType,
+          processingTime:updatedVisa.processingTime,
+          ageRestriction:updatedVisa.ageRestriction,
+          visaFee:updatedVisa.visaFee,
+          applicationMethod:updatedVisa.applicationMethod,
+          validity:updatedVisa.validity,
+          description:updatedVisa.description,
+          requiredDocuments:updatedVisa.requiredDocuments,
+          authName:updatedVisa.authName,
+          authEmail:updatedVisa.authEmail
+        }
+      };
+
+      const result = await visaCollections.updateOne(query, visa, options);
+      res.send(result);
+    });
+
 
     // user application visa api's here
     // create application
