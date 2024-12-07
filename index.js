@@ -39,21 +39,28 @@ async function run() {
       res.send(result);
     });
 
-    // read all visa
+    // read all or specific visa
     app.get('/visas', async(req, res) => {
-      const cursor = visaCollections.find();
-      const result = await cursor.toArray();
-      res.send(result);
+      const email = req.query.email;
+      if(email === undefined){
+        const cursor = visaCollections.find();
+        const result = await cursor.toArray();
+        res.send(result);
+      }else{
+        const query = {authEmail: email};
+        const cursor = visaCollections.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+      }
     });
 
-    // read single visa
+    // read single visa by id
     app.get('/visas/:id', async(req, res) => {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)};
       const result = await visaCollections.findOne(query);
       res.send(result);
     });
-
 
 
     // user application visa api's here
