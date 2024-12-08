@@ -123,10 +123,19 @@ async function run() {
     // read specific applicatioon
     app.get('/applications/:email', async(req, res) => {
       const email = req.params.email;
-      const query = {email: email};
-      const cursor = applicationCollection.find(query);
-      const result = await cursor.toArray();
-      res.send(result);
+      const searchingCountryName = req.query.searchingCountryName
+      
+      if(searchingCountryName){
+        const query = {email: email, countryName: searchingCountryName};
+        const cursor = applicationCollection.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+      }else{
+        const query = {email: email};
+        const cursor = applicationCollection.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+      }
     });
 
     // delete signle application
