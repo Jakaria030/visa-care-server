@@ -43,10 +43,16 @@ async function run() {
     app.get('/visas', async(req, res) => {
       const email = req.query.email;
       const latest = req.query.latest;
+      const filterByVisaType = req.query.filterByVisaType;
+
       if(latest){
         const cursor = visaCollections.find().sort({ _id: -1 }).limit(6);
         const result = await cursor.toArray();
-        console.log("object");
+        res.send(result);
+      }else if(filterByVisaType){
+        const query = {visaType: filterByVisaType};
+        const cursor = visaCollections.find(query);
+        const result = await cursor.toArray();
         res.send(result);
       }else if(email){
         const query = {authEmail: email};
