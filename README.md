@@ -14,8 +14,8 @@ Follow these steps to set up the server side for the Visa Application Website:
    Clone the project from GitHub and navigate to the project directory:
 
    ```bash
-   git clone https://github.com/programming-hero-web-course2/b10-a10-server-side-Jakaria030.git
-   cd visa-application-website
+   git clone https://github.com/Jakaria030/visa-care-server.git
+   cd visa-care-server
 2. **Install Dependencies**
 
     Install the required dependencies with npm:
